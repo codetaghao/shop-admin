@@ -7,14 +7,17 @@
       </div>
       <!-- 表单 -->
       <el-form ref="loginForm" class="loginForm" :model="loginForm">
+        <!-- 登录 -->
         <el-form-item>
           <el-input prefix-icon="iconfont icon-user" v-model="loginForm.username"></el-input>
         </el-form-item>
+        <!-- 密码 -->
         <el-form-item>
           <el-input type="password" prefix-icon="iconfont icon-3702mima" v-model="loginForm.password"></el-input>
         </el-form-item>
+        <!-- 按钮 -->
         <el-form-item class="loginBtn">
-          <el-button type="primary">登录</el-button>
+          <el-button type="primary" @click="toLogin()">登录</el-button>
           <el-button type="info">重置</el-button>
         </el-form-item>
       </el-form>
@@ -22,14 +25,22 @@
   </div>
 </template>
 <script>
+import { login } from '@/api/user'
 export default {
   name: 'LoginIndex',
   data () {
     return {
+      // 登录表单信息
       loginForm: {
         username: 'admin',
         password: '123456'
       }
+    }
+  },
+  methods: {
+    async toLogin () {
+      const { data: res } = await login(this.loginForm)
+      console.log(res)
     }
   }
 }
