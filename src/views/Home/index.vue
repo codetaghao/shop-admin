@@ -15,18 +15,20 @@
             <el-menu
               background-color="#333744"
               text-color="#fff"
+              unique-opened
+              router
               active-text-color="#409EFF"
               class="menuList"
             >
-              <el-submenu index="1">
+              <el-submenu v-for="item in menuList" :key="item.id" :index="item.path">
                 <template slot="title">
                   <i class="el-icon-location"></i>
-                  <span>导航一</span>
+                  <span>{{item.authName}}</span>
                 </template>
-                <el-menu-item index="1-1">
+                <el-menu-item v-for="itemChild in item.children" :key="itemChild.id" :index="itemChild.path">
                   <template slot="title">
                     <i class="el-icon-menu"></i>
-                    <span>选项1</span>
+                    <span>{{itemChild.authName}}</span>
                   </template>
                 </el-menu-item>
               </el-submenu>
@@ -40,6 +42,7 @@
 </template>
 
 <script>
+import { getMenus } from '../../api/home'
 export default {
   name: 'HomeIndex',
   data () {
@@ -47,8 +50,11 @@ export default {
       menuList: []
     }
   },
-  created () {},
+  created () {
+    this.getMenusList()
+  },
   methods: {
+    // 退出
     logout () {
       this.$confirm('是否确定退出登录?', '提示', {
         confirmButtonText: '确定',
@@ -65,6 +71,12 @@ export default {
           message: '已取消退出'
         })
       })
+    },
+    // 获取 menus 数据
+    async getMenusList () {
+      const { data: res } = await getMenus()
+      this.menuList = res.data
+      console.log(res)
     }
   }
 }
