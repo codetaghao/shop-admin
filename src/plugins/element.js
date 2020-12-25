@@ -13,7 +13,8 @@ import {
   Main,
   Menu,
   MenuItem,
-  Submenu
+  Submenu,
+  MessageBox
 } from 'element-ui'
 
 // 导入elementUI组件库样式
@@ -33,3 +34,4 @@ Vue.use(MenuItem)
 Vue.use(Submenu)
 
 Vue.prototype.$message = Message
+Vue.prototype.$confirm = MessageBox.confirm
